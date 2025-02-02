@@ -60,6 +60,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.marvel</groupId>
+			<artifactId>collection</artifactId>
+			<version>0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
