@@ -35,7 +35,8 @@ public class AuthController {
         .header(HttpHeaders.CONTENT_TYPE, "application/json")
         .body("Hola desde el APIDATA");
     }
-
+	
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody LoginReq loginReq)  {
         try {

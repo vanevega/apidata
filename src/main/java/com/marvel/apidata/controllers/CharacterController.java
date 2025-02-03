@@ -22,7 +22,6 @@ import com.marvel.apidata.models.Access;
 import com.marvel.apidata.repositories.AccessRepository;
 import com.marvel.collection.services.ConsumeMarvelApiImpl;
 
-
 @RestController
 @RequestMapping("/inside")
 public class CharacterController {
@@ -43,7 +42,7 @@ public class CharacterController {
         .header(HttpHeaders.CONTENT_TYPE, "application/json")
         .body(consume.getAllCharacters(getParameters()));
     }
-
+    
     @GetMapping("/characters/{id}")
     public ResponseEntity<String> getCharacterById(@PathVariable int id) throws URISyntaxException, IOException, InterruptedException {
         createAccessItem(2);
