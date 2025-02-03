@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marvel.apidata.models.Access;
-import com.marvel.apidata.repositories.AccessRepository;
+import com.marvel.apidata.services.MarvelApiService;
 
 @RestController
 @RequestMapping("/inside")
 public class AccessController {
     @Autowired
-    AccessRepository accessRepository;
+     MarvelApiService marvelApiService;
 
     @GetMapping("/access")
     public Iterable<Access> getAllAccess() throws URISyntaxException, IOException, InterruptedException {
-        return accessRepository.findAll();
+        return marvelApiService.findAllAccess();
     }
 }

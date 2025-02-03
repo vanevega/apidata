@@ -6,7 +6,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.marvel.apidata.models.User;
@@ -16,7 +15,7 @@ public class JWTUtil {
 
 
     private final String secret_key = "mysecretkey";
-    private long accessTokenValidity = 60*60*1000;
+    private final long accessTokenValidity = 60*60*1000;
 
     private final JwtParser jwtParser;
 
@@ -78,9 +77,4 @@ public class JWTUtil {
     public String getUsername(Claims claims) {
         return claims.getSubject();
     }
-
-    private List<String> getRoles(Claims claims) {
-        return (List<String>) claims.get("roles");
-    }
-
 }

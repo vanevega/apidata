@@ -1,14 +1,15 @@
 package com.marvel.apidata.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,9 +18,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.security.core.AuthenticationException;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
@@ -31,6 +33,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
         this.mapper = mapper;
     }
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Map<String, Object> errorDetails = new HashMap<>();
@@ -40,18 +43,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            System.out.println("token : "+accessToken);
             Claims claims = jwtUtil.resolveClaims(request);
 
             if(claims != null & jwtUtil.validateClaims(claims)){
                 String username = claims.getSubject();
-                System.out.println("username : "+username);
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(username,"",new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
-        }catch (Exception e){
+        }catch (ServletException | IOException | AuthenticationException e){
             errorDetails.put("message", "Authentication Error");
             errorDetails.put("details",e.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());

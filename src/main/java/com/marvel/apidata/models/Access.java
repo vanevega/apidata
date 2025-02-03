@@ -23,6 +23,13 @@ public class Access {
     @CreationTimestamp
     @Column(name = "access_at")
     private LocalDateTime accessAt;
+    
+    public Access() { }
+    public Access(Integer id, LocalDateTime accessAt, Integer accessType) {
+        this.accessAt = accessAt;
+        this.accessType = accessType;
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
